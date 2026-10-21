@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Portofolio Annisa</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap');
+
+body {
+  margin: 0;
+  background: black;
+  font-family: 'Quicksand', sans-serif;
+  overflow-x: hidden;
+  color: white;
+  scroll-behavior: smooth;
+}
+
+/* MATRIX */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+/* NAVBAR */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(255, 0, 128, 0.5);
+  backdrop-filter: blur(8px);
+  padding: 12px;
+  text-align: center;
+  z-index: 5;
+  box-shadow: 0 0 15px hotpink;
+}
+nav a {
+  color: white;
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+nav a:hover {
+  color: #ffd6ec;
+  text-shadow: 0 0 10px white;
+}
+
+/* CARD */
+.card {
+  background: rgba(255, 105, 180, 0.15);
+  backdrop-filter: blur(12px);
+  border: 2px solid rgba(255,105,180,0.6);
+  width: 85%;
+  max-width: 750px;
+  border-radius: 30px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 0 30px hotpink;
+  margin: 120px auto;
+  position: relative;
+  z-index: 2;
+  animation: fade 1.5s ease;
+}
+
+@keyframes fade {
+  from {opacity:0; transform: translateY(30px);}
+  to {opacity:1; transform: translateY(0);}
+}
+
+.title {
+  font-size: 34px;
+  color: #ffb6d9;
+  text-shadow: 0 0 12px hotpink;
+}
+
+/* FOTO */
+img.foto {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 5px solid hotpink;
+  box-shadow: 0 0 25px hotpink;
+  margin-top: 10px;
+}
+
+/* BOX */
+.box {
+  margin-top: 20px;
+  background: rgba(255,105,180,0.25);
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid hotpink;
+  box-shadow: 0 0 12px hotpink;
+}
+
+/* CHIBI */
+.chibi {
+  position: fixed;
+  bottom: 80px;
+  left: 20px;
+  width: 120px;
+  z-index: 4;
+  cursor: pointer;
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float {
+  0% {transform: translateY(0);}
+  50% {transform: translateY(-20px);}
+  100% {transform: translateY(0);}
+}
+
+/* CONTROL */
+.controls {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  z-index: 5;
+}
+.controls button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(45deg, hotpink, deeppink);
+  color: white;
+  font-weight: bold;
+  margin: 3px;
+  box-shadow: 0 0 10px hotpink;
+}
+
+/* CONTACT BUTTON */
+.kontak a {
+  display: inline-block;
+  margin: 8px;
+  padding: 10px 20px;
+  border-radius: 25px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+.wa {background:#25D366;}
+.ig {background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af,#515bd4);}
+</style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+<audio id="popSound" src="TULUS - Jatuh Suka (Official Lyric Video) - Tulus.mp3"></audio>
+
+<nav>
+  <a href="#about">About</a>
+  <a href="#tentang">My Story</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<img src="chibi.jpg" class="chibi" id="chibi">
+
+<div class="controls">
+  <button onclick="moveUp()">⬆</button><br>
+  <button onclick="moveLeft()">⬅</button>
+  <button onclick="moveRight()">➡</button><br>
+  <button onclick="moveDown()">⬇</button>
+</div>
+
+<!-- ABOUT -->
+<div class="card" id="about">
+  <div class="title">🌸 About Me 🌸</div>
+  <img src="giselle pink.jpg" class="foto">
+  <p><b>Nama:</b> Annisaa Afidah Syaqib</p>
+  <p><b>Sekolah:</b> SMK Telkom Lampung</p>
+  <p><b>Kelas:</b> X RPL 2</p>
+  <p><b>Hobi:</b> Main roleplay (RP)</p>
+</div>
+
+<!-- TENTANG -->
+<div class="card" id="tentang">
+  <div class="title">✨ My Story ✨</div>
+  <div class="box">
+    Hai! Aku Annisaa Afidah Syaqib, siswi SMK Telkom Lampung jurusan RPL.  
+    Aku suka dunia teknologi dan sedang belajar membuat website dan aplikasi sederhana.  
+    Hobiku bermain rolerplay (RP) karena aku suka berimajinasi dan membuat cerita.  
+    Aku bercita-cita menjadi apoteker dan software engineer agar bisa membantu banyak orang lewat teknologi dan kesehatan 💗
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="card" id="contact">
+  <div class="title">📞 Contact</div>
+  <div class="box kontak">
+    <a class="wa" href="https://wa.me/+6281272529651">WhatsApp</a>
+    <a class="ig" href="https://instagram.com/zizellgfjeno">Instagram</a>
+  </div>
+</div>
+
+<script>
+// MATRIX
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+const letters = "01";
+const fontSize = 16;
+const columns = canvas.width / fontSize;
+const drops = Array(Math.floor(columns)).fill(1);
+
+function draw() {
+  ctx.fillStyle = "rgba(0,0,0,0.05)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "#ff5fa2";
+  ctx.font = fontSize + "px monospace";
+  for (let i = 0; i < drops.length; i++) {
+    const text = letters[Math.floor(Math.random()*letters.length)];
+    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+    if (drops[i] * fontSize > canvas.height && Math.random() > 0.97) drops[i] = 0;
+    drops[i]++;
+  }
+}
+setInterval(draw, 33);
+
+// CHIBI MOVE
+let posX = 20;
+let posY = window.innerHeight - 200;
+const chibi = document.getElementById("chibi");
+const sound = document.getElementById("popSound");
+
+function updatePos(){
+  chibi.style.left = posX + "px";
+  chibi.style.top = posY + "px";
+  sound.play();
+}
+function moveLeft(){ posX -= 30; if(posX<0) posX=0; updatePos(); }
+function moveRight(){ posX += 30; if(posX>window.innerWidth-120) posX=window.innerWidth-120; updatePos(); }
+function moveUp(){ posY -= 30; if(posY<60) posY=60; updatePos(); }
+function moveDown(){ posY += 30; if(posY>window.innerHeight-150) posY=window.innerHeight-150; updatePos(); }
+</script>
+
+</body>
+</html>

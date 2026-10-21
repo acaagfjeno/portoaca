@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Game Tangkap Hati</title>
+<style>
+body {
+  margin: 0;
+  background: linear-gradient(pink, hotpink);
+  overflow: hidden;
+  font-family: Comic Sans MS;
+}
+
+#score {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background: white;
+  padding: 10px 15px;
+  border-radius: 15px;
+  font-size: 18px;
+}
+
+.heart {
+  position: absolute;
+  font-size: 30px;
+  cursor: pointer;
+  animation: fall 5s linear forwards;
+}
+
+@keyframes fall {
+  from { top: -40px; }
+  to { top: 100vh; }
+}
+
+#gameOver {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(255,192,203,0.9);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 24px;
+}
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 15px;
+  background: hotpink;
+  color: white;
+  font-size: 18px;
+}
+</style>
+</head>
+<body>
+
+<div id="score">Skor: <span id="point">0</span></div>
+
+<div id="gameOver">
+  <h2>Game Over 💔</h2>
+  <p>Skor kamu: <span id="finalScore"></span></p>
+  <button onclick="location.reload()">Main Lagi</button>
+</div>
+
+<script>
+let score = 0;
+let time = 30; // detik
+
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerText = "💖";
+  heart.style.left = Math.random() * (window.innerWidth - 40) + "px";
+
+  heart.onclick = () => {
+    score++;
+    document.getElementById("point").innerText = score;
+    heart.remove();
+  };
+
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 5000);
+}
+
+let heartInterval = setInterval(createHeart, 800);
+
+let timer = setInterval(() => {
+  time--;
+  if (time <= 0) {
+    clearInterval(heartInterval);
+    clearInterval(timer);
+    document.getElementById("gameOver").style.display = "flex";
+    document.getElementById("finalScore").innerText = score;
+  }
+}, 1000);
+</script>
+
+</body>
+</html>
